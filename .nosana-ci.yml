@@ -1,0 +1,25 @@
+global:
+  image: node:18
+
+  trigger:
+    branch:
+      - "*"
+
+  environment:
+    APP_ENV: production
+
+jobs:
+
+  - name: Install Dependencies
+    commands:
+      - npm ci
+    artifacts:
+      - name: node_modules
+        path: ./node_modules/
+
+  - name: Lint and generate docs
+    commands:
+      - npm run test
+    resources:
+      - name: node_modules
+        path: ./
